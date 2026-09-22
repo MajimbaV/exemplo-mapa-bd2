@@ -14,12 +14,11 @@ const client = await new Client({
     database: process.env.PG_DATABASE
 }).connect()
  
-const res = await client.query('SELECT $1::text as message', ['Hello world!'])
-console.log(res.rows[0].message) // Hello world!
-await client.end()
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+
+app.get('/municipios/:codigo', async (req, res) => {
+  const geoJson = await client.query('SELECT ST_AsGeoJson(geom) FROM municipios WHERE id = $1', [req.params.codigo]);
+  res.send(geoJson.rows[0]);
 });
 
 app.listen(port, () => {

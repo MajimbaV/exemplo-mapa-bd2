@@ -33,6 +33,8 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
+        var geoJsonLayer = L.geoJSON().addTo(map);
+
         const select = document.getElementById('select-municipio');
 
         fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados/25/municipios')
@@ -45,6 +47,18 @@
                     select.appendChild(option);
                 });
             });
+
+        select.addEventListener("change", async () => {
+            await fetch(`http://localhost:3000/municipios/${select.value}`)
+            .then(response => response.json())
+            .then(data => {
+                const json = JSON.parse(data.st_asgeojson);
+                geoJsonLayer.clearLayers();
+                geoJsonLayer.addData(json);
+                map.fitBounds(geoJsonLayer.getBounds());
+            })
+
+        })
     </script>
 
 </body>
