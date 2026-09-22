@@ -49,7 +49,6 @@
                 });
             });
 
-<<<<<<< HEAD
         select.addEventListener("change", async () => {
             await fetch(`https://exemplo-mapa-bd2.onrender.com/municipios/${select.value}`)
             .then(response => response.json())
@@ -61,21 +60,6 @@
             })
 
         })
-=======
-            select.addEventListener('change', ()=>{
-                fetch(`http://localhost:3000/municipios/${select.value}`)
-                    .then(response => response.json())
-                    .then(data =>{
-                        let jsonData = JSON.parse(data.st_asgeojson);
-                        if(jsonLayer){
-                            map.removeLayer(jsonLayer);
-                        }
-                        jsonLayer = L.geoJSON(jsonData).addTo(map);
-                        map.fitBounds(jsonLayer.getBounds());
-                    });
-            });
-
->>>>>>> 77b68d98acf959ffab3abcb05fff52d09e57fb9d
     </script>
 
 </body>
