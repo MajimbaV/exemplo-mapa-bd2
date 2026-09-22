@@ -1,8 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import cors from 'cors';
+
 import express from 'express';
 const app = express();
+app.use(cors());
+app.use(express.json());
 const port = 3000;
 
 import { Client } from 'pg'
@@ -13,12 +17,21 @@ const client = await new Client({
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DATABASE
 }).connect()
+<<<<<<< HEAD
  
 
 
 app.get('/municipios/:codigo', async (req, res) => {
   const geoJson = await client.query('SELECT ST_AsGeoJson(geom) FROM municipios WHERE id = $1', [req.params.codigo]);
   res.send(geoJson.rows[0]);
+=======
+
+app.get('/municipios/:codigo', async (req, res) => {
+  const geojson = await client.query(
+    'SELECT ST_AsGeoJSON(geom) FROM municipios WHERE id = $1', [req.params.codigo]
+  )
+  res.json(geojson.rows[0]);
+>>>>>>> 77b68d98acf959ffab3abcb05fff52d09e57fb9d
 });
 
 app.listen(port, () => {
