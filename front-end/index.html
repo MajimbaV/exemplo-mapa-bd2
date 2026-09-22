@@ -49,7 +49,7 @@
             });
 
         select.addEventListener("change", async () => {
-            await fetch(`http://localhost:3000/municipios/${select.value}`)
+            await fetch(`https://exemplo-mapa-bd2.onrender.com/municipios/${select.value}`)
             .then(response => response.json())
             .then(data => {
                 const json = JSON.parse(data.st_asgeojson);
